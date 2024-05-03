@@ -14,7 +14,11 @@ export const UserRoutes = () => {
     <>
         <NavBar />
         <Routes>
+
           <Route path="users" element={<UsersPage/>} />
+
+          {/* este page es el mismo que tenemos en el hook */}
+          <Route path="users/page/:page" element={<UsersPage/>} />
 
           {/* muestra o no la pagina dependiendo de si es admin o no */}
           {!isAdmin ||

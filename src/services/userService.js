@@ -1,5 +1,7 @@
 import usersApi from "../apis/usersApi";
 
+// la base url esta configurada en el usersApi que se encuentra en el .env
+// llamado 
 const BASE_URL = '';
 
 // const config = () => {
@@ -16,6 +18,21 @@ export const findAll = async() => {
     try {
         // servidor de spring para el backend donde lista todos los usuarios.
         const response = await usersApi.get(BASE_URL);
+        return response;
+        
+    } catch (error) {
+
+        console.error(error);
+        
+    }
+
+}
+
+// funcion del paginador
+export const findAllPages = async(page = 0) => {
+    try {
+        // servidor de spring para el backend donde lista todos los usuarios.
+        const response = await usersApi.get(`${BASE_URL}/page/${page}`);
         return response;
         
     } catch (error) {

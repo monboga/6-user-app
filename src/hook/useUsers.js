@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { findAll, remove, save, update } from "../services/userService";
+import { findAllPages, remove, save, update } from "../services/userService";
 import { useDispatch, useSelector } from "react-redux";
 import { initialUserForm, addUser,removeUser,updateUser,loadingUsers, onUserSelectedForm, onOpenForm, onCloseForm, loadingError } from "../store/slices/users/usersSlice";
 import { useAuth } from "../auth/hooks/useAuth";
@@ -8,7 +8,7 @@ import { useAuth } from "../auth/hooks/useAuth";
 
 export const useUsers = () => {
   // const [users, dispatch] = useReducer(userReducer, initialUsers);
-  const {users, userSelected, visibleForm, errors, isLoading} = useSelector(state => state.users);
+  const {users, userSelected, visibleForm, errors, isLoading, paginator} = useSelector(state => state.users);
   const dispatch = useDispatch();
 
   // const [userSelected, setUserSelected] = useState(initialUserForm);
@@ -19,10 +19,12 @@ export const useUsers = () => {
 
   const navigate = useNavigate();
 
-  const getUsers = async () => {
+  // por defecto el pages que se recibe es 0, y se pasa al findAllPages
+  const getUsers = async (pages = 0) => {
     try {
       
-      const result = await findAll();
+      const result = await findAllPages(pages);
+      // lo dejamos de prueba
       console.log(result);
       dispatch(loadingUsers(result.data));
     } catch (error) {
@@ -138,6 +140,7 @@ export const useUsers = () => {
     visibleForm,
     errors,
     isLoading,
+    paginator, //viene desde redux o el estado
     handlerAddUser,
     handlerUserSelectedForm,
     handlerRemoveUser,

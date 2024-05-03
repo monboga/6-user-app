@@ -18,6 +18,7 @@ export const usersSlice = createSlice({
     name: 'users',
     initialState: {
         users: [],
+        paginator: [],
         userSelected: initialUserForm,
         visibleForm: false,
         errors: initialErrors,
@@ -50,7 +51,10 @@ export const usersSlice = createSlice({
             state.visibleForm = false;
         },
         loadingUsers: (state, {payload}) => {
-            state.users = payload;
+            // recibimos el objeto con atributo content, que es el arreglo paginado
+            state.users = payload.content;
+            // payload vendria siendo el paginador que contiene toda la informacion del paginador
+            state.paginator = payload;
             state.isLoading = false;
         },
         onUserSelectedForm: (state, {payload}) => {
